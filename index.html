@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html ng-app="bonusApp" ng-controller="mainCtrl">
+    <head>
+        <meta charset="utf-8">
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+        <title>Formularios</title>
+
+
+        <!-- Incluir Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+        <!-- Incluir AngularJS -->
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/app.js"></script>
+        
+
+
+    </head>    
+    <body>
+        
+        <div class="container">
+
+        <h1>Formularios</h1>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-7">
+                
+                <form name="formulario" ng-submit="guardarDatos(formulario.$valid)" novalidate="novalidate">
+<!--- 
+1) ng-submit es para que ejecute una función determinada cuando se le dé al botón del submit del formulario.
+2) Al darle un name, se puede acceder, desde AngularJS, a los datos que están guardados en el formulario como si fuera una variable más. Esto se puede ver más abajo dentro de las etiquetas <pre></pre>.
+...
+7) Si se añade el atributo de HTML5 novalidate, la información del formulario no se valida desde HTML5, se procesa de forma normal.
+8) Como lo que queremos es hacer las comprobaciones directamente en AngularJS, hay que enviarle el valor que determina si lo que se ha almacenado en el formulario es correcto. Eso se puede ver en la estructura de datos que se imprime abajo del todo, pero es el dato $valid.
+ -->
+                
+                    <div class="form-group" ng-class="{'has-error': !formulario.nombre.$valid && !formulario.nombre.$pristine,
+                    'has-success': formulario.nombre.$valid && formulario.nombre.$pristine}">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" class="form-control" ng-model="datosFormulario.nombre" name="nombre" required>
+                        <p class="help-block" ng-hide="formulario.nombre.$valid || !formulario.nombre.$pristine">Este campo es obligatorio</p>
+<!----- 
+4) Como en el app.js se ha creado un array para los datos del formulario, aquí hay que hacer ng-model de cada uno de los campos del formulario y, así, poder hacer referencias a estos.
+5) Si se le añade el required de HTML5, no se permite validar el formulario hasta que no se completa este campo. En este caso, al ponerle required="required", sirve para luego ver que esto es exactamente lo que está dando error en la estructura de datos y es fácil hacer referencia a ello desde AngularJS.
+6) Si se le añaden nombres en el atributo name a cada uno de los campos del formulario, estos van a aparecer desglosados en la parte de abajo, entre etiquetas <pre>.
+...
+9) Hay una clase en Bootstrap 3 que refleja, gráficamente, cuándo hay un error: has-error. También hay otra para cuano se han introducido bien los datos.
+10) Las anotaciones con la clase help-block (que también es de Bootstrap 3) se coordinan con las clases anteriores y sus estilos.
+11) Esta sintaxis: ng-class="{'has-error': !formulario.nombre.$valid && !formulario.nombre.$pristine, 'has-success': formulario.nombre.$valid && formulario.nombre.$pristine}" quiere decir que se crea una especie de fórmula en la que se completa con una clase u otra dependiendo del cumplimiento de las condiciones que se han ido poniendo.
+12) Esto quiere decir que: ng-hide="formulario.nombre.$valid || !formulario.nombre.$pristine" se va a ocultar esto cuando el formulario no sea válido o no se haya modificado en ningún momento.
+    --->
+                    </div>
+
+                    <div class="form-group has-error has-success">
+                        <label for="edad">Edad</label>
+                        <input type="number" id="edad" class="form-control" ng-model="datosFormulario.edad">
+                    </div>
+
+                    <div class="form-group has-error has-success">
+                        <label for="genero">Género</label>
+                        <select class="form-control" id="genero" ng-model="datosFormulario.genero">
+                            <option value=""></option>
+                            <option value="H">Hombre</option>
+                            <option value="M">Mujer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': !formulario.nombre.$valid && !formulario.nombre.$pristine,
+                    'has-success': formulario.nombre.$valid && formulario.nombre.$pristine}">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" class="form-control" ng-model="datosFormulario.email" name="email" required="required">
+                        <p class="help-block" ng-show="formulario.email.$error.required">Este campo es obligatorio</p>
+                        <p class="help-block" ng-show="formulario.email.$error.email">No tiene formato de correo</p>
+                    </div>
+<!---
+13) Cuando se trata del correo electrónico, hay alguna diferencia en cuanto a las validaciones que se puedan hacer. Por eso, ng-show="formulario.email.$error.required" hará que el texto aparezca si el error de campo requerido se produce.
+--->
+
+                    <button type="submit" class="btn btn-primary"> Guardar</button>
+                </form>            
+
+            </div>
+
+            <!-- Bloque de codigo -->
+            <div class="col-md-5">
+                <label>Estructura de datos</label>
+                <pre>{{formulario | json}}</pre>
+<!-----
+3) Aquí se añaden las llaves de AngularJS para que se pinte toda la información que está manejándose dentro del <form>.
+    --->
+            </div>
+
+        </div>
+
+            
+
+        </div>
+        
+    </body>
+</html>
