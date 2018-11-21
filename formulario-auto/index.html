@@ -16,6 +16,7 @@
         <!-- Incluir AngularJS -->
         <script src="js/lib/angular.min.js"></script>
         <script src="js/app.js"></script>
+        <!-- Este es el nuevo archivo para autovalidar los formularios -->
         <script src="js/lib/jcs-auto-validate.js"></script>
         
 
@@ -40,12 +41,14 @@
                         <input type="text" id="nombre" class="form-control"
                                 name="nombre"
                                 ng-model="formData.nombre"
-                                required="required">
+                                required="required"
+                                ng-minlength="3">
                     </div>
 <!-----
 1) Se ha añadido class="control-label" a las etiquetas <label> para que jcs-auto-validate tome el control. Sin embargo, los mensajes salen en inglés. Lo que hay que hacer es modificarlo directamente en el archivo .js. Para encontrar rápidamente los mensajes de error: angular.autoValidate.errorMessages.
 ...
 6) NOTA: con estos cambios, no se guardan los cambios aunque esté puesto el novalidate. Si hay algo mal, no se postea nada.
+7) Se puede añadir un mínimo de longitud para el nombre, que se hace con ng-minlength. Todo esto es gracias a lo nuevo que se ha añadido.
 --->
 
                     <div class="form-group">
